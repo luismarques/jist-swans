@@ -1,8 +1,18 @@
 CC = gcc
-CC_OPT = -g -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux
+CC_OPT = -g -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux -I${JAVA_HOME}/include/darwin
 CLASSPATH=../../libs/jargs.jar:..
 
-all: libmemprof.so memprof.class
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Linux)
+LD_OPT = -shared
+endif
+
+ifeq ($(UNAME), Darwin)
+LD_OPT = -bundle
+endif
+
+all: #libmemprof.so memprof.class
 
 clean:
 	rm -f *.so
@@ -11,7 +21,7 @@ clean:
 	rm -f memprof.h
 
 libmemprof.so: memprof.o
-	ld -o $@ -shared $< 
+	ld -o $@ $(LD_OPT) $< 
 
 memprof.o: memprof.c
 	$(CC) $(CC_OPT) -o $@ -c $<
