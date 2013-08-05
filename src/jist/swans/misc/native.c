@@ -11,8 +11,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <assert.h>
-#include <jvmpi.h>
-#include <jvmdi.h>
+#include <jni.h>
 #include <math.h>
 #include <assert.h>
 
@@ -50,12 +49,13 @@ JNIEXPORT jfloat JNICALL Java_jist_swans_misc_Util_fast_1log
   return fast_log(n);
 }
 
-int main(int argv, char *argc)
+int main(int argv, char **argc)
 {
   int i;
   for(i=0; i<10000000; i++)
   {
-    log(20.0);
+    (void) log(20.0);
   }
+  return 0;
 }
 
