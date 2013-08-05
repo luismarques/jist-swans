@@ -16,9 +16,12 @@ JIST_LIBS=${JIST_DIR}/libs/bcel.jar:${JIST_DIR}/libs/bsh.jar:${JIST_DIR}/libs/ja
 LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${JIST_SRC}/jist/swans/misc
 export LD_LIBRARY_PATH
 
-# max heap
-MEM=`cat /proc/meminfo | grep MemTotal | grep -o "[0-9]\+"`
-MEM=$(( ($MEM-200000)/1024 ))
+# if /proc/meminfo is present use it to set the maximum heap size
+if [ -f /proc/meminfo ]; then
+    MEM=`cat /proc/meminfo | grep MemTotal | grep -o "[0-9]\+"`
+    MEM=$(( ($MEM-200000)/1024 ))
+else
+    MEM=256
+fi
 
-# run spot, run
 exec env CLASSPATH=${JIST_SRC}:${JIST_LIBS}:${CLASSPATH} ${JAVA} ${JAVA_OPT} -Xmx${MEM}m jist.runtime.Main ${JIST_ARGS} $*
