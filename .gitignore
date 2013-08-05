@@ -1,0 +1,9 @@
+*.class
+
+/src/jist/swans/misc/native.h
+/src/jist/swans/misc/native.o
+/src/jist/swans/misc/libswansutil.so
+
+/src/memprof/memprof.h
+/src/memprof/memprof.o
+/src/memprof/libmemprof.so
