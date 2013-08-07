@@ -203,11 +203,20 @@ public interface Placement
     /** {@inheritDoc} */
     public Location getNextLocation()
     {
-      if(i/nodex==nodey) throw new IllegalStateException("grid points exhausted");
-      Location l = new Location.Location2D(
-          (i%nodex)*fieldx/nodex, (i/nodex)*fieldy/nodey);
+      if(i/nodex==nodey)
+          throw new IllegalStateException("grid points exhausted");
+
+      float x = (i % nodex) * fieldx;
+      if(nodex > 1)
+          x /= nodex-1;
+
+      float y = (i / nodex) * fieldy;
+      if(nodey > 1)
+          y /= nodey-1;
+
       i++;
-      return l;
+
+      return new Location.Location2D(x, y);
     }
 
   } // class: Grid
