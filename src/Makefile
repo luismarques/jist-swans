@@ -9,14 +9,14 @@
 
 
 # build programs and flags
-CLASSPATH:=../libs/bcel.jar:../libs/bsh.jar:../libs/jargs.jar:../libs/log4j.jar:../libs/jython.jar:.:$(CLASSPATH)
+CLASSPATH:=../libs/bcel.jar:../libs/bsh.jar:../libs/jargs.jar:../libs/log4j.jar:../libs/jython.jar:../build:$(CLASSPATH)
 JAVA=java
 JAVAC=javac
-JAVAC_FLAGS=-g -source 1.4 -classpath $(CLASSPATH)
+JAVAC_FLAGS=-d ../build -g -source 1.4 -classpath $(CLASSPATH)
 #JAVAC=jikes
 #JAVAC_FLAGS=-source 1.4 +P -g -classpath $(CLASSPATH)
 RMIC=rmic
-RMIC_FLAGS=-v1.2 -d . -g -classpath $(CLASSPATH)
+RMIC_FLAGS=-v1.2 -d ../build -g -classpath $(CLASSPATH)
 JAVADOC=javadoc
 JAVADOC_FLAGS=-source 1.4 -quiet -breakiterator -sourcepath .:/usr/java/src -classpath $(CLASSPATH) -splitindex -version -author -private -doctitle "JiST (Java in Simulation Time) - API Documentation"
 
@@ -78,17 +78,17 @@ RMI := \
 	jist.runtime.RemoteJist.JobQueueServer \
 
 RMI_CLASS := \
-	jist/runtime/Controller.class \
-	jist/runtime/RemoteIO$$RemoteInputStreamSender.class \
-	jist/runtime/RemoteIO$$RemoteOutputStreamReceiver.class \
-	jist/runtime/RemoteJist$$Ping.class \
-	jist/runtime/RemoteJist$$JistClient.class \
-	jist/runtime/RemoteJist$$JobQueueServer.class \
+	../build/jist/runtime/Controller.class \
+	../build/jist/runtime/RemoteIO$$RemoteInputStreamSender.class \
+	../build/jist/runtime/RemoteIO$$RemoteOutputStreamReceiver.class \
+	../build/jist/runtime/RemoteJist$$Ping.class \
+	../build/jist/runtime/RemoteJist$$JistClient.class \
+	../build/jist/runtime/RemoteJist$$JobQueueServer.class \
 
-JIST_OBJ:=$(JIST_SRC:.java=.class)
-SWANS_OBJ:=$(SWANS_SRC:.java=.class)
-APP_OBJ:=$(APP_SRC:.java=.class)
-RMI_STUB_CLASS:=$(RMI_CLASS:.class=_Stub.class)
+JIST_OBJ := $(addprefix ../build/, $(JIST_SRC:.java=.class))
+SWANS_OBJ := $(addprefix ../build/, $(SWANS_SRC:.java=.class))
+APP_OBJ := $(addprefix ../build/, $(APP_SRC:.java=.class))
+RMI_STUB_CLASS := $(addprefix ../build/, $(RMI_CLASS:.class=_Stub.class))
 
 # targets
 .PHONY: all clean jist swans app swansjni docs rmi jar
@@ -100,7 +100,6 @@ help:
 
 clean:
 	@make -C jist/swans/misc clean
-	@find . -name \*.class -print0 | xargs -0 rm -f
 	@find . -name \*_Stub.java -print0 | xargs -0 rm -f
 	@rm -rf docs docs.stamp
 
@@ -118,15 +117,12 @@ rmi: jist $(RMI_STUB_CLASS)
 # build rules
 $(JIST_OBJ): $(JIST_SRC)
 	$(JAVAC) $(JAVAC_FLAGS) $(JIST_SRC)
-	@touch $(JIST_OBJ)
 
 $(SWANS_OBJ): $(SWANS_SRC)
 	$(JAVAC) $(JAVAC_FLAGS) $(SWANS_SRC)
-	@touch $(SWANS_OBJ)
 
 $(APP_OBJ): $(APP_SRC)
 	$(JAVAC) $(JAVAC_FLAGS) $(APP_SRC)
-	@touch $(APP_OBJ)
 
 $(RMI_STUB_CLASS): $(RMI_CLASS)
 	$(RMIC) $(RMIC_FLAGS) $(RMI)

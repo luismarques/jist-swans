@@ -1,4 +1,4 @@
-*.class
+/build/*
 
 /src/jist/swans/misc/native.h
 /src/jist/swans/misc/native.o

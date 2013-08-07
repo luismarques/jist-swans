@@ -1,6 +1,6 @@
 CC = gcc
 CC_OPT = -g -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux -I${JAVA_HOME}/include/darwin
-CLASSPATH=../../libs/jargs.jar:..
+CLASSPATH=../../libs/jargs.jar:../../build
 
 UNAME := $(shell uname)
 
@@ -30,7 +30,7 @@ memprof.c: memprof.h
 	touch memprof.c
 
 memprof.h: memprof.class
-	javah -classpath .. -o $@ memprof.memprof
+	javah -classpath ../../build -o $@ memprof.memprof
 
 %.class: %.java
 	javac -classpath $(CLASSPATH):$$CLASSPATH $<

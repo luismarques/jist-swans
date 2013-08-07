@@ -35,6 +35,7 @@ bench:
 clean: cleanlocal
 
 cleanlocal:
+	-rm -rf build/*
 	-rm -f $(JIST_JAR_FILE)
 	-rm -f $(SWANS_JAR_FILE)
 	-rm -f $(SRC_TAR_FILE)

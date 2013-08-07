@@ -1,6 +1,6 @@
 CC = gcc
 CC_OPT = -g -O3 -ffast-math -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux -I${JAVA_HOME}/include/darwin
-CP=../../..:$(CLASSPATH)
+CP=../../../../build:$(CLASSPATH)
 
 UNAME := $(shell uname)
 
@@ -18,7 +18,6 @@ all: libswansutil.so Util.class
 clean:
 	@rm -f *.so
 	@rm -f *.o
-	@rm -f Util.class
 	@rm -f native.h
 
 libswansutil.so: native.o
@@ -30,10 +29,10 @@ native.o: native.c
 native.c: native.h
 	touch native.c
 
-native.h: Util.class
+native.h: ../../../../build/jist/swans/misc/Util.class
 	javah -classpath $(CP) -o $@ jist.swans.misc.Util
 	touch native.h
 
 %.class: %.java
-	javac -classpath $(CP) $<
+	javac -d ../../../../build/ -classpath $(CP) $<
 
