@@ -12,7 +12,7 @@ package jist.swans.misc;
 import java.io.*;
 import java.util.*;
 import java.net.*;
-import sun.misc.HexDumpEncoder;
+//import sun.misc.HexDumpEncoder;
 
 /**
  * Utility class to simplify the serialization and deserialization
@@ -31,8 +31,13 @@ public final class Pickle
 
   public static void printByteArrayNicely(byte[] a)
   {
-    HexDumpEncoder hde = new HexDumpEncoder();
-    System.out.print(hde.encode(a));
+      // HexDumpEncoder is deprecated, but this method does not seem to be
+      // in use any way. The assert should trigger if anyone actually uses this.
+
+      assert(false);
+
+      //HexDumpEncoder hde = new HexDumpEncoder();
+      //System.out.print(hde.encode(a));
   }
   
   public static void printByteArrayNicely(byte[] a, int offset, int length) 
