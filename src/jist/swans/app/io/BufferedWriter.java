@@ -53,7 +53,11 @@ public class BufferedWriter extends java.io.BufferedWriter
     nextChar = 0;
 
     lineSeparator = (String) java.security.AccessController.doPrivileged(
-        new sun.security.action.GetPropertyAction("line.separator"));
+      new java.security.PrivilegedAction() {
+        public Object run() {
+          return System.getProperty("line.separator");
+        }
+      });
   }
 
   /** @see java.io.BufferedWriter */
