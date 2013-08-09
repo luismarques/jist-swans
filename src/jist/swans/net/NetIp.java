@@ -312,8 +312,16 @@ public class NetIp implements NetInterface
       log.debug("queue t="+JistAPI.getTime()+" to="+nextHop+" on="+interfaceId+" data="+msg);
     }
     NicInfo ni = nics[interfaceId];
-    ni.q.insert(new QueuedMessage(msg, nextHop), msg.getPriority());
-    if(!ni.busy) pump(interfaceId);
+    
+    // If the queue gets full then insert() would throw an exception.
+    // By testing isFull() we add a tail drop, which solves the problem.
+    // Maybe it should implement RED (or an alternative) instead?
+    if(!ni.q.isFull())
+    {
+      ni.q.insert(new QueuedMessage(msg, nextHop), msg.getPriority());
+
+      if(!ni.busy) pump(interfaceId);
+    }
   }
 
   //////////////////////////////////////////////////
