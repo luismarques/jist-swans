@@ -75,3 +75,20 @@ tarball:
 	tar --totals -czf $(TAR_FILE) jist-swans-$(VERSION)
 	rm -rf jist-swans-$(VERSION)
 
+check-env:
+ifndef JAVA_HOME
+    $(error You need to set JAVA_HOME before compiling)
+endif
+
+test: src
+	./bin/swans driver.aodvsim -n 25 -f 2000x2000 -a grid:5x5 -t 10,600,60
+	./bin/swans driver.bordercast -p zrp:2 --iarp=iarp:inf -e 300 -n 10 -f 200x200 -a grid:5x5 -b 5,100,20
+	./bin/swans driver.dsrtest
+	./bin/swans driver.heartbeat 5 100 5
+	./bin/swans driver.ip
+	./bin/swans driver.memory 20
+	./bin/swans driver.ndp -m time -n 50 -d 4082 -t 900
+	./bin/swans driver.spatial -d 100 -n 20
+	./bin/swans driver.tcp
+	./bin/swans driver.threaded
+	./bin/swans driver.udp
