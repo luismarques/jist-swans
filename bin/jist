@@ -2,10 +2,8 @@
 
 # java executable
 JAVA=java
-JAVA_OPT=-server
-#JAVA=/opt/IBMJava2-141/bin/java
-#JAVA_OPT=
-# -enableassertions
+#JAVA_OPT=-server
+JAVA_OPT="-server -enableassertions"
 
 # jist directories
 JIST_DIR=`dirname $0`/../
