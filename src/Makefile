@@ -12,13 +12,13 @@
 CLASSPATH:=../libs/bcel.jar:../libs/bsh.jar:../libs/jargs.jar:../libs/log4j.jar:../libs/jython.jar:../build:$(CLASSPATH)
 JAVA=java
 JAVAC=javac
-JAVAC_FLAGS=-d ../build -g -source 1.4 -classpath $(CLASSPATH)
+JAVAC_FLAGS=-d ../build -g -source 1.7 -target jsr14 -classpath $(CLASSPATH)
 #JAVAC=jikes
 #JAVAC_FLAGS=-source 1.4 +P -g -classpath $(CLASSPATH)
 RMIC=rmic
 RMIC_FLAGS=-v1.2 -d ../build -g -classpath $(CLASSPATH)
 JAVADOC=javadoc
-JAVADOC_FLAGS=-source 1.4 -quiet -breakiterator -sourcepath .:/usr/java/src -classpath $(CLASSPATH) -splitindex -version -author -private -doctitle "JiST (Java in Simulation Time) - API Documentation"
+JAVADOC_FLAGS=-source 1.7 -quiet -breakiterator -sourcepath .:/usr/java/src -classpath $(CLASSPATH) -splitindex -version -author -private -doctitle "JiST (Java in Simulation Time) - API Documentation"
 
 # source files
 JIST_SRC:= \
