@@ -218,8 +218,15 @@ public final class Main
     CmdLineParser.Option opt_queue = parser.addBooleanOption('q', "queue");
     CmdLineParser.Option opt_proxy = parser.addStringOption('x', "proxy");
 
+    // Options were not being recognized because of the first argument. Trim it.
+    String[] trueArgs = new String[args.length-1];
+    for(int i = 1; i < args.length; ++i)
+    {
+        trueArgs[i-1] = args[i];
+    }
+
     // parse
-    parser.parse(args);
+    parser.parse(trueArgs);
     CommandLineOptions options = new CommandLineOptions();
     if(parser.getOptionValue(opt_help)!=null) 
     {
