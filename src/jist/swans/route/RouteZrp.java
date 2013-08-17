@@ -476,7 +476,7 @@ public class RouteZrp implements RouteInterface.Zrp
     if(nextHop!=null)
     {
       // send off packet
-      netEntity.send(ip, ndp.getMacId(nextHop), ndp.getMacAddress(nextHop));
+      send(ip, nextHop);
     }
     else
     {
@@ -532,7 +532,14 @@ public class RouteZrp implements RouteInterface.Zrp
   public void send(NetMessage.Ip msg, NetAddress dst)
   {
     MacAddress mac = ndp.getMacAddress(dst);
-    if(mac!=null) netEntity.send(msg, ndp.getMacId(dst), mac);
+    if(mac!=null)
+    {
+      byte macId = ndp.getMacId(dst);
+      if(macId != Constants.NET_INTERFACE_INVALID)
+      {
+        netEntity.send(msg, macId, mac);
+      }
+    }
   }
 
   /** {@inheritDoc} */
