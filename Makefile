@@ -83,6 +83,7 @@ endif
 test: src
 	./bin/swans driver.aodvsim -n 25 -f 2000x2000 -a grid:5x5 -t 10,600,60
 	./bin/swans driver.bordercast -p zrp:2 --iarp=iarp:inf -e 300 -n 10 -f 200x200 -a grid:5x5 -b 5,100,20
+	./bin/swans driver.CBR -f 100,10 -a grid:3,3 -p zrp -e 10000 -n 9 -c 1 -t 10
 	./bin/swans driver.dsrtest
 	./bin/swans driver.heartbeat 5 100 5
 	./bin/swans driver.ip
