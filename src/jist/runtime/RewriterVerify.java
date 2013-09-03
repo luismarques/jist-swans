@@ -30,7 +30,7 @@ public final class RewriterVerify
    *
    * @param name class name
    */
-  public static void checkme(String name)
+  public static void checkme(String name) throws ClassNotFoundException
   {
     System.out.println("Now verifying: "+name+"\n");
 
@@ -64,7 +64,7 @@ public final class RewriterVerify
    *
    * @param args list of class files to verify
    */
-  public static void main(String[] args)
+  public static void main(String[] args) throws ClassNotFoundException
   {
     try
     {

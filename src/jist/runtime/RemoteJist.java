@@ -16,6 +16,7 @@ import java.rmi.*;
 import java.rmi.server.*;
 import java.rmi.registry.*;
 import org.apache.bcel.classfile.*;
+import org.apache.bcel.util.ClassPath;
 
 /** 
  * All the JiST client-server related remote classes.
@@ -491,6 +492,12 @@ public class RemoteJist
     public JavaClass findClass(String classname)
     {
       return (JavaClass)cache.get(classname);
+    }
+    
+    public ClassPath getClassPath()
+    {
+      assert false;
+      return null;
     }
 
     /** {@inheritDoc} */
