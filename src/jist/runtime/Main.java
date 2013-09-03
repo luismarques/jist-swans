@@ -226,7 +226,9 @@ public final class Main
     }
 
     // parse
-    parser.parse(trueArgs);
+    // Fixes recognizing debug options, but messes up AppJava. Disable it:
+    // parser.parse(trueArgs);
+    parser.parse(args);
     CommandLineOptions options = new CommandLineOptions();
     if(parser.getOptionValue(opt_help)!=null) 
     {
